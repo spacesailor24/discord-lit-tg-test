@@ -85,7 +85,9 @@ function App() {
   );
 
   useEffect(() => {
+    console.log("YOYOYOYOYO")
     if ((window as any)?.Telegram) {
+      console.log("Telegram is loaded");
       console.log("telegram user:", (window as any)?.Telegram.WebApp.initDataUnsafe.user)
       setTelegramUser((window as any)?.Telegram.WebApp.initDataUnsafe.user); // temp fix until we fix the provider
       const telegramApp = (window as any)?.Telegram.WebApp;
