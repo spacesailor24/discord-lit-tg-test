@@ -101,7 +101,7 @@ function App() {
       const telegramApp = (window as any).Telegram?.WebApp;
       const telegramAppData = telegramApp.initDataUnsafe;
       console.log("telegramAppData: ", telegramAppData)
-      const userObject = {
+      const userObject : TelegramUser = {
         "id": Number(telegramAppData.user.id),
         "first_name": telegramAppData.user.first_name,
         "last_name": "",
@@ -110,7 +110,7 @@ function App() {
         "hash": telegramAppData.hash
       }
       console.log("user object: ", userObject);
-      setTelegramUser(userObject); // temp fix until we fix the provider
+      setTelegramUser(userObject);
       telegramApp.expand();
     }
   }, []);
