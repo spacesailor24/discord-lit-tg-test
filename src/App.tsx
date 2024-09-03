@@ -85,10 +85,10 @@ function App() {
   );
 
   useEffect(() => {
-    if (window?.Telegram) {
-      console.log("telegram user:", window?.Telegram.WebApp.initDataUnsafe.user)
-      setTelegramUser(window?.Telegram.WebApp.initDataUnsafe.user); // temp fix until we fix the provider
-      const telegramApp = window?.Telegram.WebApp;
+    if ((window as any)?.Telegram) {
+      console.log("telegram user:", (window as any)?.Telegram.WebApp.initDataUnsafe.user)
+      setTelegramUser((window as any)?.Telegram.WebApp.initDataUnsafe.user); // temp fix until we fix the provider
+      const telegramApp = (window as any)?.Telegram.WebApp;
       console.log("Telegram App", telegramApp);
       telegramApp.expand();
       //telegramApp.initDataUnsafe.user;
