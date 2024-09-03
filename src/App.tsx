@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
+import { useSDK } from '@metamask/sdk-react';
 import TelegramLoginButton from "./TelegramLoginButton";
 import { mintPkp } from "./mintPkp";
 import { getPkpSessionSigs } from "./getPkpSessionSigs";
@@ -23,6 +24,7 @@ function App() {
     VITE_TELEGRAM_BOT_SECRET,
   } = import.meta.env as unknown as EnvVariables;
 
+  const { sdk, account, connected, connecting, provider, chainId, balance } = useSDK();
   const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
   const [mintedPkp, setMintedPkp] = useState<MintedPkp | null>(null);
   const [pkpSessionSigs, setPkpSessionSigs] = useState<PkpSessionSigs | null>(
@@ -35,6 +37,15 @@ function App() {
       console.log("Current telegramUser state:", telegramUser);
     }
   }, [telegramUser]);
+
+  const connect = async () => {
+    try {
+      console.log("trying to connect")
+      await sdk?.connect();
+    } catch (err) {
+      console.warn(`failed to connect..`, err);
+    }
+  };
 
   // Validating the Telegram user data, go here to learn more:
   // https://core.telegram.org/widgets/login#checking-authorization
@@ -128,7 +139,7 @@ function App() {
   const handleMintPkp = async () => {
     if (telegramUser) {
       try {
-        const minted = await mintPkp(telegramUser);
+        const minted = await mintPkp(telegramUser, provider);
         setMintedPkp(minted!);
       } catch (error) {
         console.error("Failed to mint PKP:", error);
@@ -155,6 +166,9 @@ function App() {
 
   return (
     <div>
+      <button onClick={connect}>
+        {connected ? "Connect Wallet" : account}
+      </button>
       <div className="card">
         <h3>Mint a PKP Using a Telegram Account</h3>
         <hr />

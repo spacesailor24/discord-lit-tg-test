@@ -12,10 +12,11 @@ import IpfsHash from "ipfs-only-hash";
 import { type TelegramUser } from "./types";
 import { litActionCode } from "./litAction";
 
-export const mintPkp = async (telegramUser: TelegramUser) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const mintPkp = async (telegramUser: TelegramUser, provider: any) => {
   try {
     console.log("🔄 Connecting to Ethereum account...");
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const ethersSigner = provider.getSigner();
     console.log(
