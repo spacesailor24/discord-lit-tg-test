@@ -19,8 +19,12 @@ export const mintPkp = async (telegramUser: TelegramUser, provider: any, account
     //const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     console.log("provider", provider)
-    //const account = await provider.getAccount();
-    const ethersSigner = new ethers.Wallet(account, provider);
+
+    const ethersProvider = new ethers.providers.Web3Provider(provider);
+    // Get the signer object from the provider
+    //const signer = ethersProvider.getSigner();
+    const ethersSigner = ethersProvider.getSigner();
+
     //const ethersSigner = provider.getSigner();
     console.log(
       "✅ Connected Ethereum account:",
