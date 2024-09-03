@@ -140,7 +140,7 @@ function App() {
   const handleMintPkp = async () => {
     if (telegramUser) {
       try {
-        const minted = await mintPkp(telegramUser, provider);
+        const minted = await mintPkp(telegramUser, provider, account);
         setMintedPkp(minted!);
       } catch (error) {
         console.error("Failed to mint PKP:", error);
