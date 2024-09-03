@@ -84,6 +84,27 @@ function App() {
     [VITE_TELEGRAM_BOT_SECRET]
   );
 
+  useEffect(() => {
+    if (window.Telegram) {
+      console.log("telegram user:", window.Telegram.WebApp.initDataUnsafe.user)
+      setTelegramUser(window.Telegram.WebApp.initDataUnsafe.user); // temp fix until we fix the provider
+      const telegramApp = window.Telegram.WebApp;
+      console.log("Telegram App", telegramApp);
+      telegramApp.expand();
+      //telegramApp.initDataUnsafe.user;
+    }
+    // console.log("Telegram user 1: ", telegramUser);
+    // if (telegramUser) {
+    //   console.log("Telegram user 2: ", telegramUser);
+    //   console.log("Telegram user id: ", telegramUser.id.toString());
+    //   getUser(telegramUser.id.toString());
+    // } else if (!isProduction) {
+    //   console.log("Development mode");
+    //   const testTelegramId = "69420";
+    //   getUser(testTelegramId);
+    // }
+  }, [telegramUser]);
+
   const handleTelegramResponse = useCallback(
     async (user: TelegramUser) => {
       console.log("Telegram auth response received:", user);
