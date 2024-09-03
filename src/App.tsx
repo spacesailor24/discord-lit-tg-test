@@ -85,26 +85,20 @@ function App() {
   );
 
   useEffect(() => {
-    console.log("YOYOYOYOYO")
     if ((window as any).Telegram) {
-      console.log("Telegram is loaded");
-      console.log("telegram data unsafe:", (window as any).Telegram?.WebApp.initDataUnsafe)
-      setTelegramUser((window as any).Telegram?.WebApp.initDataUnsafe.user); // temp fix until we fix the provider
       const telegramApp = (window as any).Telegram?.WebApp;
-      console.log("Telegram App", telegramApp);
+      const telegramAppData = telegramApp.initDataUnsafe;
+      const userObject = {
+        "id": telegramAppData.user.id,
+        "first_name": telegramAppData.user.first_name,
+        "username": telegramAppData.user.username,
+        "auth_date": telegramAppData.auth_date,
+        "hash": telegramAppData.hash
+      }
+      console.log("user object: ", userObject);
+      setTelegramUser(userObject); // temp fix until we fix the provider
       telegramApp.expand();
-      //telegramApp.initDataUnsafe.user;
     }
-    // console.log("Telegram user 1: ", telegramUser);
-    // if (telegramUser) {
-    //   console.log("Telegram user 2: ", telegramUser);
-    //   console.log("Telegram user id: ", telegramUser.id.toString());
-    //   getUser(telegramUser.id.toString());
-    // } else if (!isProduction) {
-    //   console.log("Development mode");
-    //   const testTelegramId = "69420";
-    //   getUser(testTelegramId);
-    // }
   }, []);
 
   const handleTelegramResponse = useCallback(
