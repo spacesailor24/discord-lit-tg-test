@@ -22,15 +22,20 @@ const { VITE_LIT_CAPACITY_CREDIT_TOKEN_ID, VITE_TELEGRAM_BOT_SECRET } =
 
 export const getPkpSessionSigs = async (
   telegramUser: TelegramUser,
-  mintedPkp: MintedPkp
+  mintedPkp: MintedPkp,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  provider: any
 ) => {
   let litNodeClient: LitNodeClient;
 
   try {
     console.log("🔄 Connecting to Ethereum account...");
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+    const ethersProvider = new ethers.providers.Web3Provider(provider);
+    //const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
-    const ethersSigner = provider.getSigner();
+    const ethersSigner = ethersProvider.getSigner();
+    //const ethersSigner = provider.getSigner();
     console.log(
       "✅ Connected Ethereum account:",
       await ethersSigner.getAddress()

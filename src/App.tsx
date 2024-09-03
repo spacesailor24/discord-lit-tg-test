@@ -140,7 +140,7 @@ function App() {
   const handleMintPkp = async () => {
     if (telegramUser) {
       try {
-        const minted = await mintPkp(telegramUser, provider, account);
+        const minted = await mintPkp(telegramUser, provider);
         setMintedPkp(minted!);
       } catch (error) {
         console.error("Failed to mint PKP:", error);
@@ -152,7 +152,7 @@ function App() {
   const handleGetPkpSessionSigs = async () => {
     if (telegramUser && mintedPkp) {
       try {
-        const sessionSigs = await getPkpSessionSigs(telegramUser, mintedPkp);
+        const sessionSigs = await getPkpSessionSigs(telegramUser, mintedPkp, provider);
         setPkpSessionSigs(sessionSigs);
       } catch (error) {
         console.error("Failed to get PKP session signatures:", error);

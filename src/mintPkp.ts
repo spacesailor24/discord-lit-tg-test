@@ -13,20 +13,15 @@ import { type TelegramUser } from "./types";
 import { litActionCode } from "./litAction";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const mintPkp = async (telegramUser: TelegramUser, provider: any, account: any) => {
+export const mintPkp = async (telegramUser: TelegramUser, provider: any) => {
   try {
     console.log("🔄 Connecting to Ethereum account...");
-    //const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     console.log("provider", provider)
-    console.log("account", account)
 
     const ethersProvider = new ethers.providers.Web3Provider(provider);
-    // Get the signer object from the provider
-    //const signer = ethersProvider.getSigner();
     const ethersSigner = ethersProvider.getSigner();
 
-    //const ethersSigner = provider.getSigner();
     console.log(
       "✅ Connected Ethereum account:",
       await ethersSigner.getAddress()
