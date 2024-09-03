@@ -41,6 +41,7 @@ function App() {
   const connect = async () => {
     try {
       console.log("trying to connect")
+      console.log("sdk", sdk)
       await sdk?.connect();
     } catch (err) {
       console.warn(`failed to connect..`, err);
