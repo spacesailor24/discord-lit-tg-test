@@ -87,6 +87,14 @@ export const getPkpSessionSigs = async (
     console.log(
       `🔄 Getting the Session Sigs for the PKP using Lit Action code string...`
     );
+
+    const logJsParams = {
+      telegramUserData: JSON.stringify(telegramUser),
+      telegramBotSecret: VITE_TELEGRAM_BOT_SECRET,
+      pkpTokenId: mintedPkp.tokenId,
+    }
+    console.log("jsParams: ", logJsParams);
+
     const sessionSignatures = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey: mintedPkp.publicKey,
       capabilityAuthSigs: [capacityDelegationAuthSig],
