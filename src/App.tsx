@@ -88,9 +88,9 @@ function App() {
     console.log("YOYOYOYOYO")
     if ((window as any).Telegram) {
       console.log("Telegram is loaded");
-      console.log("telegram user:", (window as any)?.Telegram.WebApp.initDataUnsafe.user)
-      setTelegramUser((window as any)?.Telegram.WebApp.initDataUnsafe.user); // temp fix until we fix the provider
-      const telegramApp = (window as any)?.Telegram.WebApp;
+      console.log("telegram user:", (window as any).Telegram?.WebApp.initDataUnsafe.user)
+      setTelegramUser((window as any).Telegram?.WebApp.initDataUnsafe.user); // temp fix until we fix the provider
+      const telegramApp = (window as any).Telegram?.WebApp;
       console.log("Telegram App", telegramApp);
       telegramApp.expand();
       //telegramApp.initDataUnsafe.user;
@@ -105,7 +105,7 @@ function App() {
     //   const testTelegramId = "69420";
     //   getUser(testTelegramId);
     // }
-  }, [telegramUser]);
+  }, []);
 
   const handleTelegramResponse = useCallback(
     async (user: TelegramUser) => {
