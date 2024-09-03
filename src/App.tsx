@@ -100,9 +100,11 @@ function App() {
     if ((window as any).Telegram) {
       const telegramApp = (window as any).Telegram?.WebApp;
       const telegramAppData = telegramApp.initDataUnsafe;
+      console.log("telegramAppData: ", telegramAppData)
       const userObject = {
         "id": Number(telegramAppData.user.id),
         "first_name": telegramAppData.user.first_name,
+        "last_name": "",
         "username": telegramAppData.user.username,
         "auth_date": Number(telegramAppData.auth_date),
         "hash": telegramAppData.hash
