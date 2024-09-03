@@ -19,6 +19,7 @@ export const mintPkp = async (telegramUser: TelegramUser, provider: any, account
     //const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     console.log("provider", provider)
+    console.log("account", account)
 
     const ethersProvider = new ethers.providers.Web3Provider(provider);
     // Get the signer object from the provider
