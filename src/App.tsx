@@ -101,10 +101,10 @@ function App() {
       const telegramApp = (window as any).Telegram?.WebApp;
       const telegramAppData = telegramApp.initDataUnsafe;
       const userObject = {
-        "id": telegramAppData.user.id,
+        "id": Number(telegramAppData.user.id),
         "first_name": telegramAppData.user.first_name,
         "username": telegramAppData.user.username,
-        "auth_date": telegramAppData.auth_date,
+        "auth_date": Number(telegramAppData.auth_date),
         "hash": telegramAppData.hash
       }
       console.log("user object: ", userObject);
