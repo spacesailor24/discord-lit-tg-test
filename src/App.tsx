@@ -24,7 +24,7 @@ function App() {
     VITE_TELEGRAM_BOT_SECRET,
   } = import.meta.env as unknown as EnvVariables;
 
-  const { sdk, account, connected, connecting, provider, chainId, balance } = useSDK();
+  const { sdk, account, connected, provider, /*connecting, chainId, balance*/ } = useSDK();
   const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
   const [mintedPkp, setMintedPkp] = useState<MintedPkp | null>(null);
   const [pkpSessionSigs, setPkpSessionSigs] = useState<PkpSessionSigs | null>(
