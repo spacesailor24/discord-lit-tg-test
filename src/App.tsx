@@ -102,14 +102,7 @@ function App() {
       console.log("Telegram auth response received:", user);
       if (user && typeof user === "object") {
         // Process the user data from Telegram login
-        const processedUser: TelegramUser = {
-          id: Number(user.id),
-          first_name: user.first_name,
-          last_name: user.last_name || "",
-          username: user.username,
-          auth_date: Number(user.auth_date),
-          hash: user.hash,
-        };
+        const processedUser: TelegramUser = { ...user };
 
         setTelegramUser(processedUser);
 
