@@ -26,7 +26,6 @@ function App() {
 
   const { sdk, account, connected, provider /*connecting, chainId, balance*/ } =
     useSDK();
-  console.log(sdk, account, connected, provider);
   const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
   const [mintedPkp, setMintedPkp] = useState<MintedPkp | null>(null);
   const [pkpSessionSigs, setPkpSessionSigs] = useState<PkpSessionSigs | null>(
