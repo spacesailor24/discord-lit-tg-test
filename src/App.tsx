@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { useSDK } from '@metamask/sdk-react';
+import { useSDK } from "@metamask/sdk-react";
 import TelegramLoginButton from "./TelegramLoginButton";
 import { mintPkp } from "./mintPkp";
 import { getPkpSessionSigs } from "./getPkpSessionSigs";
@@ -24,7 +24,8 @@ function App() {
     VITE_TELEGRAM_BOT_SECRET,
   } = import.meta.env as unknown as EnvVariables;
 
-  const { sdk, account, connected, provider, /*connecting, chainId, balance*/ } = useSDK();
+  const { sdk, account, connected, provider /*connecting, chainId, balance*/ } =
+    useSDK();
   const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
   const [mintedPkp, setMintedPkp] = useState<MintedPkp | null>(null);
   const [pkpSessionSigs, setPkpSessionSigs] = useState<PkpSessionSigs | null>(
@@ -40,8 +41,8 @@ function App() {
 
   const connect = async () => {
     try {
-      console.log("trying to connect")
-      console.log("sdk", sdk)
+      console.log("trying to connect");
+      console.log("sdk", sdk);
       await sdk?.connect();
     } catch (err) {
       console.warn(`failed to connect..`, err);
@@ -96,32 +97,23 @@ function App() {
     [VITE_TELEGRAM_BOT_SECRET]
   );
 
-  useEffect(() => {
-    if ((window as any).Telegram) {
-      const telegramApp = (window as any).Telegram?.WebApp;
-      const telegramAppData = telegramApp.initDataUnsafe;
-      console.log("telegramAppData: ", telegramAppData)
-      const userObject : TelegramUser = {
-        "id": Number(telegramAppData.user.id),
-        "first_name": telegramAppData.user.first_name,
-        "last_name": "",
-        "username": telegramAppData.user.username,
-        "auth_date": Number(telegramAppData.auth_date),
-        "hash": telegramAppData.hash
-      }
-      console.log("user object: ", userObject);
-      setTelegramUser(userObject);
-      telegramApp.expand();
-    }
-  }, []);
-
   const handleTelegramResponse = useCallback(
     async (user: TelegramUser) => {
       console.log("Telegram auth response received:", user);
       if (user && typeof user === "object") {
-        setTelegramUser(user);
+        // Process the user data from Telegram login
+        const processedUser: TelegramUser = {
+          id: Number(user.id),
+          first_name: user.first_name,
+          last_name: user.last_name || "",
+          username: user.username,
+          auth_date: Number(user.auth_date),
+          hash: user.hash,
+        };
 
-        const { isValid, isRecent } = await verifyTelegramUser(user);
+        setTelegramUser(processedUser);
+
+        const { isValid, isRecent } = await verifyTelegramUser(processedUser);
         if (!isValid || !isRecent) {
           setValidationError(
             !isValid
@@ -130,6 +122,11 @@ function App() {
           );
         } else {
           setValidationError(null);
+        }
+
+        // Expand the Telegram WebApp if available
+        if ((window as any).Telegram?.WebApp) {
+          (window as any).Telegram.WebApp.expand();
         }
       } else {
         console.error("Invalid user data received:", user);
@@ -154,7 +151,11 @@ function App() {
   const handleGetPkpSessionSigs = async () => {
     if (telegramUser && mintedPkp) {
       try {
-        const sessionSigs = await getPkpSessionSigs(telegramUser, mintedPkp, provider);
+        const sessionSigs = await getPkpSessionSigs(
+          telegramUser,
+          mintedPkp,
+          provider
+        );
         setPkpSessionSigs(sessionSigs);
       } catch (error) {
         console.error("Failed to get PKP session signatures:", error);
